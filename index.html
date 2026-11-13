@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelo de formatação RevBEA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Plano: padrão visual MonitoraEA (tokens e componentes do Design System), sem a logo.
+   Layout: cabeçalho azul-800 + faixa azul-600 → barra de ferramentas fixa → seções (pílula de título + painéis) → rodapé. Só tema claro. */
+:root{
+  --mea-gray-0:#ffffff; --mea-gray-50:#f2f5f8; --mea-gray-100:#e7ebef; --mea-gray-200:#d1d8dd; --mea-gray-400:#91999f; --mea-gray-600:#52595e; --mea-gray-700:#1c1f23;
+  --mea-blue-50:#e0f5ff; --mea-blue-100:#b4e5ff; --mea-blue-200:#6fc7ff; --mea-blue-400:#008fe5; --mea-blue-600:#005db0; --mea-blue-800:#003571; --mea-blue-900:#001b43;
+  --mea-green-600:#007f42; --mea-amber-50:#fff3d7; --mea-amber-800:#6c4300; --mea-red-600:#ac0010;
+  --ink:var(--mea-gray-700); --ink-soft:var(--mea-gray-600); --paper:var(--mea-gray-50); --paper-raised:var(--mea-gray-0); --paper-sunk:var(--mea-gray-100);
+  --line:var(--mea-gray-100); --line-strong:var(--mea-gray-200); --brand:var(--mea-blue-600); --sel:var(--mea-blue-50); --focus:var(--mea-blue-600);
+  --font-sans:Poppins,-apple-system,"Segoe UI",sans-serif;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:56px;
+  --radius-s:6px; --radius-m:10px; --radius-box:12px; --radius-l:16px; --radius-pill:999px;
+  --shadow-card:0 1px 3px rgba(10,13,16,.08); --shadow-pop:0 8px 24px rgba(20,40,58,.15);
+  --page-max:1400px; --control-h:46px; --button-h:44px; --header-stripe:8px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px;background:var(--paper)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
+a{color:var(--mea-blue-600)}
+h1,h2,h3{margin:0}
+p{margin:0 0 8px}
+button,input,select{font:inherit;color:inherit}
+code{font-family:var(--font-sans);font-weight:500;background:var(--paper-sunk);border-radius:var(--radius-s);padding:1px 6px;font-size:.95em}
+.mea-wrap{max-width:var(--page-max);margin:0 auto;padding-left:max(var(--space-4),env(safe-area-inset-left,0px));padding-right:max(var(--space-4),env(safe-area-inset-right,0px))}
+
+/* cabeçalho */
+.mea-header{background:var(--mea-blue-800);color:var(--mea-gray-0)}
+.mea-header__inner{display:flex;align-items:center;flex-wrap:wrap;gap:12px 20px;padding-block:18px}
+.mea-header__title{font-size:20px;font-weight:700;line-height:1.25;margin:0}
+.mea-header__sub{font-size:12.5px;color:var(--mea-blue-100);margin:0}
+.mea-header__tag{margin-left:auto;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.4);border-radius:var(--radius-pill);padding:4px 14px;color:var(--mea-blue-100)}
+.mea-header__stripe{height:var(--header-stripe);background:var(--mea-blue-600)}
+
+/* barra de ferramentas */
+.mea-toolbar-wrap{position:sticky;top:0;z-index:20;background:var(--paper);padding-block:var(--space-3)}
+.mea-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;background:var(--paper-raised);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:14px 16px}
+.mea-search{position:relative;flex:1 1 280px;min-width:0}
+.mea-search__input{width:100%;font-size:14px;min-height:var(--control-h);border:1px solid var(--line-strong);background:var(--paper);border-radius:var(--radius-pill);padding:0 16px 0 44px;color:var(--ink)}
+.mea-search__icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink-soft);pointer-events:none}
+.mea-select{font-size:13.5px;min-height:var(--control-h);padding:0 16px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--paper-raised);color:var(--ink);min-width:220px}
+.mea-count{font-size:12.5px;color:var(--ink-soft)}
+
+/* seções e painéis */
+.mea-section{padding-top:var(--space-5)}
+.mea-section-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.mea-section-head__track{flex:0 1 760px;min-width:min(100%,280px);background:var(--mea-blue-50);border-radius:var(--radius-pill);display:flex}
+.mea-section-head__title{margin:0;background:var(--mea-blue-600);color:var(--mea-gray-0);font-size:19px;font-weight:700;line-height:1.35;padding:8px 24px;border-radius:var(--radius-pill)}
+.mea-section-head__note{flex:1 1 300px;font-size:13px;color:var(--ink-soft);margin:0;max-width:560px}
+.mea-panel{background:var(--paper-raised);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:16px 18px;min-width:0}
+.mea-panel__label{font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 2px}
+.mea-panel__title{font-size:18px;font-weight:700;line-height:1.3;color:var(--mea-blue-900);margin:0 0 8px}
+.mea-grid{display:grid;gap:var(--space-4)}
+.mea-grid--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.mea-grid--4{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.mea-stack{display:flex;flex-direction:column;gap:var(--space-4)}
+.mea-bignum{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mea-bignum__n{font-size:36px;font-weight:700;line-height:1;color:var(--mea-blue-900)}
+.mea-bignum__n--err{color:var(--mea-red-600)}
+.mea-bignum__n--ok{color:var(--mea-green-600)}
+.mea-bignum__t{font-size:13px;font-weight:600;color:var(--ink-soft)}
+.mea-lead{font-size:14px;color:var(--ink);max-width:78ch;margin:0 0 4px}
+.mea-note{font-size:12.5px;line-height:1.45;color:var(--ink-soft);margin:8px 0 0}
+.mea-hint{font-size:13px;color:var(--ink-soft);max-width:78ch}
+ul.mea-list{margin:6px 0 0;padding-left:20px}
+ul.mea-list li{margin:4px 0}
+
+/* botões e segmentos */
+.mea-btn{font-size:14px;font-weight:500;line-height:1.2;min-height:var(--button-h);padding:0 20px;border-radius:var(--radius-pill);border:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;transition:background .15s,box-shadow .15s}
+.mea-btn--primary{background:var(--mea-blue-800);color:var(--mea-gray-0)}
+.mea-btn--primary:hover{background:var(--mea-blue-600)}
+.mea-btn--secondary{background:var(--mea-gray-0);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--mea-gray-600)}
+.mea-btn--secondary:hover{background:var(--mea-blue-50);box-shadow:inset 0 0 0 1.5px var(--mea-blue-600)}
+.mea-seg{display:flex;flex-wrap:wrap;gap:8px}
+.mea-seg__opt{font-size:13.5px;font-weight:500;min-height:var(--button-h);padding:0 18px;border-radius:var(--radius-pill);border:1.5px solid var(--mea-gray-600);background:var(--mea-gray-0);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;text-decoration:none}
+.mea-seg__opt:hover{background:var(--mea-blue-50);border-color:var(--mea-blue-600)}
+.mea-seg__opt[aria-pressed="true"],.mea-seg__opt[aria-selected="true"]{background:var(--mea-blue-800);border-color:var(--mea-blue-800);color:var(--mea-gray-0)}
+.mea-seg__n{font-weight:700;color:var(--mea-blue-600);margin-right:8px}
+.mea-copy{font-size:12.5px;font-weight:500;min-height:32px;padding:0 14px;border-radius:var(--radius-pill);border:0;background:var(--mea-gray-0);color:var(--mea-blue-800);box-shadow:inset 0 0 0 1.5px var(--mea-blue-600);cursor:pointer;white-space:nowrap}
+.mea-copy:hover{background:var(--mea-blue-50)}
+.mea-filters{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.mea-filters__lbl{font-size:12px;font-weight:600;color:var(--ink-soft);min-width:72px}
+
+/* pílulas de estado */
+.mea-pill{display:inline-block;font-size:11.5px;font-weight:600;line-height:1.25;border-radius:var(--radius-pill);padding:2px 10px;white-space:nowrap}
+.mea-pill--tbd{background:var(--mea-amber-50);color:var(--mea-amber-800)}
+.mea-pill--err{background:var(--mea-red-600);color:var(--mea-gray-0)}
+.mea-pill--info{background:var(--mea-blue-50);color:var(--mea-blue-800)}
+.mea-pill--plain{background:var(--paper-sunk);color:var(--ink)}
+.mea-warn{color:var(--mea-amber-800);background:var(--mea-amber-50);border-radius:var(--radius-s);padding:6px 10px;font-size:12.5px;display:block;margin-top:10px}
+
+/* aviso */
+.mea-notice{display:flex;gap:12px;align-items:flex-start;background:var(--mea-blue-50);border-radius:var(--radius-box);padding:12px 16px;font-size:13px;color:var(--ink)}
+.mea-notice__i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--mea-blue-600);color:var(--mea-gray-0);display:grid;place-items:center;font-weight:700;font-style:italic;font-size:13px}
+.mea-notice b{color:var(--mea-blue-900)}
+
+.mea-opp{background:var(--mea-amber-50);border-radius:var(--radius-box);padding:12px 16px;margin-top:12px;font-size:13px;color:var(--ink)}
+.mea-opp p{margin:6px 0 0}
+.mea-opp b{color:var(--mea-amber-800)}
+/* tabelas */
+.mea-tablewrap{overflow-x:auto;border-radius:var(--radius-box);background:var(--paper-raised)}
+table.mea-table{border-collapse:collapse;width:100%;font-size:13px}
+.mea-table th{font-size:12px;font-weight:600;color:var(--ink-soft);text-align:left;padding:10px 14px;border-bottom:2px solid var(--line-strong);white-space:nowrap}
+.mea-table td{padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.mea-table tr:last-child td{border-bottom:0}
+.mea-table td.num{text-align:right;font-weight:600}
+.mea-table td:first-child{font-weight:600;color:var(--mea-blue-900)}
+
+/* exemplo copiável */
+.mea-ex{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border-radius:var(--radius-box);padding:10px 14px;margin:8px 0;font-size:13px}
+.mea-ex code{background:transparent;padding:0;white-space:pre-wrap;flex:1;font-weight:500;word-break:break-word}
+
+/* ficha / acordeão */
+.mea-sheet{border:1px solid var(--line);border-radius:var(--radius-box);padding:12px 16px;background:var(--paper-raised);margin-bottom:8px}
+.mea-sheet summary{font-weight:700;color:var(--mea-blue-800);cursor:pointer;min-height:24px}
+.mea-sheet .mea-sheet__body{margin-top:8px}
+
+/* etapas */
+ol.mea-steplist{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);counter-reset:s}
+ol.mea-steplist li{counter-increment:s;display:grid;grid-template-columns:38px 1fr;gap:14px;align-items:start;background:var(--paper-raised);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:14px 18px}
+ol.mea-steplist li::before{content:counter(s);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--mea-blue-800);color:var(--mea-gray-0)}
+ol.mea-steplist b{display:block;color:var(--mea-blue-900);font-size:14px}
+ol.mea-steplist span{color:var(--ink-soft);font-size:13px}
+
+/* anatomia */
+.mea-anat{display:grid;grid-template-columns:minmax(240px,420px) minmax(260px,1fr);gap:24px;align-items:start}
+.mea-anat svg{width:100%;height:auto;background:#fff;border-radius:var(--radius-s);box-shadow:var(--shadow-pop)}
+.zone{fill:var(--mea-blue-50);stroke:var(--mea-blue-600);stroke-width:1;cursor:pointer}
+.zone:hover{fill:var(--mea-blue-100)}
+.zone.on{fill:var(--mea-blue-800);stroke:var(--mea-blue-800)}
+.zone:focus-visible{outline:none;stroke-width:3;stroke:var(--mea-blue-400)}
+.ztxt{font:600 9px var(--font-sans);fill:var(--mea-blue-900);pointer-events:none}
+.zone.on+.ztxt{fill:#fff}
+.guide{stroke:var(--mea-blue-400);stroke-width:.8;stroke-dasharray:4 3}
+.gtxt{font:500 8px var(--font-sans);fill:var(--mea-blue-600)}
+.mea-pagepanel h3{font-size:18px;font-weight:700;color:var(--mea-blue-900);margin-bottom:8px}
+
+/* campos */
+.mea-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px 16px}
+.mea-field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px}
+.mea-field input[type=text],.mea-field input[type=email]{width:100%;min-height:var(--control-h);padding:0 16px;border:1px solid var(--line-strong);border-radius:var(--radius-pill);background:var(--paper);color:var(--ink)}
+.mea-field--wide{grid-column:1/-1}
+.mea-check{display:flex;gap:10px;align-items:center;font-size:13.5px;cursor:pointer;min-height:32px}
+.mea-check input{width:20px;height:20px;accent-color:var(--mea-blue-800)}
+.mea-out{margin-top:16px;background:var(--mea-blue-50);border-radius:var(--radius-box);padding:14px 16px}
+.mea-out small{display:block;font-size:12px;font-weight:600;color:var(--mea-blue-800);margin-bottom:4px}
+.mea-out__txt{font-size:13.5px;color:var(--mea-blue-900);word-break:break-word}
+ul.mea-checks{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:6px}
+ul.mea-checks li{display:flex;gap:10px;align-items:baseline;font-size:13px}
+.st{font-weight:700;min-width:62px;font-size:12px;white-space:nowrap}
+.st.ok{color:var(--mea-green-600)}
+.st.warn{color:var(--mea-amber-800)}
+.st.err{color:var(--mea-red-600)}
+
+/* barras de auditoria */
+.mea-bars{display:grid;gap:12px}
+.mea-bar{display:grid;grid-template-columns:110px 1fr 108px;gap:12px;align-items:center;font-size:13px}
+.mea-bar__track{position:relative;height:14px;background:var(--line);border-radius:7px}
+.mea-bar__fill{height:100%;border-radius:7px;background:var(--mea-blue-400)}
+.mea-bar__fill.over{background:var(--mea-red-600)}
+.mea-bar__lim{position:absolute;top:-5px;bottom:-5px;border-left:2px dashed var(--ink)}
+.mea-bar__lim span{position:absolute;top:-17px;left:4px;font-size:11px;color:var(--ink-soft);white-space:nowrap}
+.mea-bar__v{font-weight:700;color:var(--mea-blue-900)}
+.mea-bar__v em{font-style:normal;font-weight:600;color:var(--mea-red-600);font-size:11.5px;display:block}
+
+/* pauta */
+.mea-prog{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mea-prog__bar{flex:1;height:10px;background:var(--line-strong);border-radius:6px;overflow:hidden}
+.mea-prog__bar>div{height:100%;background:var(--mea-green-600);width:0;border-radius:6px}
+.mea-items{display:grid;gap:var(--space-3);margin-top:12px}
+.mea-item.done{opacity:.62}
+.mea-item.done h3{text-decoration:line-through}
+.mea-item__head{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.mea-item__id{font-size:12px;font-weight:600;color:var(--ink-soft)}
+.mea-item h3{font-size:16px;font-weight:700;color:var(--mea-blue-900);margin-bottom:6px}
+.mea-item dl{margin:0;display:grid;grid-template-columns:96px 1fr;gap:6px 16px;font-size:13px}
+.mea-item dt{color:var(--ink-soft);font-weight:600}
+.mea-item dd{margin:0}
+.mea-dec{display:flex;gap:10px;align-items:center;margin-top:12px;font-size:13px;font-weight:500;cursor:pointer;min-height:32px}
+.mea-dec input{width:20px;height:20px;accent-color:var(--mea-blue-800)}
+.hidden{display:none!important}
+
+/* decisão dos editores */
+.mea-field textarea{width:100%;min-height:76px;padding:10px 14px;border:1px solid var(--line-strong);border-radius:var(--radius-box);background:var(--paper);color:var(--ink);resize:vertical;line-height:1.45}
+.mea-metaform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px 16px;margin-bottom:14px}
+.mea-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.mea-decide{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.mea-decide__lbl{font-size:12px;font-weight:600;color:var(--ink-soft);margin:0 0 6px}
+.mea-decide .mea-seg__opt{min-height:38px;padding:0 14px;font-size:13px}
+.mea-decide .mea-field{margin-top:12px}
+.mea-item[data-s="Aprovar"]{box-shadow:inset 4px 0 0 var(--mea-green-600),var(--shadow-card)}
+.mea-item[data-s="Aprovar com ajuste"]{box-shadow:inset 4px 0 0 var(--mea-blue-600),var(--shadow-card)}
+.mea-item[data-s="Não adotar"]{box-shadow:inset 4px 0 0 var(--mea-red-600),var(--shadow-card)}
+.mea-item[data-s="Adiar"]{box-shadow:inset 4px 0 0 var(--mea-amber-800),var(--shadow-card)}
+.mea-opp__go{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:600;color:var(--mea-blue-800)}
+/* rodapé */
+.mea-footer{background:var(--mea-blue-800);color:var(--mea-gray-0);padding-block:28px 36px;margin-top:var(--space-7)}
+.mea-footer p{color:var(--mea-blue-100);margin:0 0 4px;font-size:12.5px}
+.mea-footer b{font-weight:600;color:var(--mea-gray-0)}
+
+@media (max-width:760px){
+  .mea-anat{grid-template-columns:1fr}
+  .mea-bar{grid-template-columns:84px 1fr 86px}
+  .mea-item dl{grid-template-columns:1fr}
+  .mea-section-head__title{font-size:17px;padding:8px 18px}
+  .mea-header__tag{margin-left:0}
+  .mea-select{min-width:0;flex:1 1 100%}
+  html{scroll-padding-top:140px}
+}
+</style>
+</head>
+<body class="mea-page">
+
+<header class="mea-header">
+  <div class="mea-wrap mea-header__inner">
+    <div>
+      <h1 class="mea-header__title">Modelo de formatação RevBEA</h1>
+      <p class="mea-header__sub">Revista Brasileira de Educação Ambiental · artigos e relatos de experiência</p>
+    </div>
+    <span class="mea-header__tag">v0.3 · 13/11/2026</span>
+  </div>
+  <div class="mea-header__stripe"></div>
+</header>
+
+<div class="mea-toolbar-wrap">
+  <div class="mea-wrap">
+    <div class="mea-toolbar" role="search">
+      <div class="mea-search">
+        <svg class="mea-search__icon" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4.5 4.5"/></svg>
+        <input class="mea-search__input" id="q" type="search" placeholder="Buscar regra ou termo (ex.: ORCID, margem, rodapé)" aria-label="Buscar no manual">
+      </div>
+      <label for="jump" class="mea-count">Ir para</label>
+      <select class="mea-select" id="jump"></select>
+      <span class="mea-count" id="qcount" aria-live="polite"></span>
+    </div>
+  </div>
+</div>
+
+<main class="mea-wrap">
+
+<section class="mea-section" aria-label="Resumo">
+  <div class="mea-grid mea-grid--4">
+    <div class="mea-panel"><p class="mea-panel__label">Papel e margens</p><div class="mea-bignum"><span class="mea-bignum__n">Letter</span></div><p class="mea-note">esquerda 3,25 · direita 3,34 · superior e inferior 2,50 cm</p></div>
+    <div class="mea-panel"><p class="mea-panel__label">Texto</p><div class="mea-bignum"><span class="mea-bignum__n">Arial 12</span></div><p class="mea-note">justificado, espaçamento simples, recuo de 1,5 cm</p></div>
+    <div class="mea-panel"><p class="mea-panel__label">Extensão</p><div class="mea-bignum"><span class="mea-bignum__n">20 pág.</span></div><p class="mea-note">limite, incluindo referências</p></div>
+    <div class="mea-panel"><p class="mea-panel__label">Repadronização</p><div class="mea-bignum"><span class="mea-bignum__n" id="tilemel">0</span></div><p class="mea-note">propostas para decisão dos editores, na seção 9</p></div>
+  </div>
+  <div class="mea-panel" style="margin-top:16px">
+    <h2 class="mea-panel__title">Como ler esta página</h2>
+    <p class="mea-lead">Esta página declara o modelo de formatação das seções <b>Artigos</b> e <b>Relatos de experiência</b>: o layout final que o sistema vai aplicar ao manuscrito aprovado e o template que os autores usam. As regras vêm do template oficial, medido, e das diretrizes do site; as propostas também consideram a prática de outras revistas. Quando as duas fontes divergem, aparece <span class="mea-pill mea-pill--tbd">DIV</span>. Quando padronizar traria ganho claro, uma caixa âmbar indica a possibilidade de repadronização, reunida na seção 9.</p>
+    <div class="mea-seg" id="index" style="margin-top:12px" aria-label="Índice"></div>
+  </div>
+</section>
+
+<!-- 1 -->
+<section class="mea-section" id="pagina">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">1 · Página, margens e rodapé</h2></div><p class="mea-section-head__note">Clique nas zonas do desenho para ver a regra de cada elemento. Letter, 21,59 × 27,94 cm.</p></div>
+  <div class="mea-panel">
+    <div class="mea-seg" role="group" aria-label="Tipo de página" style="margin-bottom:16px">
+      <button class="mea-seg__opt" type="button" data-pg="p1" aria-pressed="true">Primeira página</button>
+      <button class="mea-seg__opt" type="button" data-pg="int" aria-pressed="false">Página interna (ímpar)</button>
+      <button class="mea-seg__opt" type="button" data-pg="par" aria-pressed="false">Página interna (par, espelhada)</button>
+    </div>
+    <div class="mea-anat">
+      <svg id="svgpage" viewBox="0 0 432 558" role="img" aria-label="Anatomia da página RevBEA"></svg>
+      <div class="mea-pagepanel" id="panel" aria-live="polite"></div>
+    </div>
+  </div>
+  <div class="mea-grid mea-grid--2" style="margin-top:16px">
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Margens (cm)</h3>
+      <div class="mea-tablewrap"><table class="mea-table"><tbody>
+      <tr><td>Esquerda</td><td class="num">3,25</td></tr>
+      <tr><td>Direita</td><td class="num">3,34</td></tr>
+      <tr><td>Superior</td><td class="num">2,50</td></tr>
+      <tr><td>Inferior</td><td class="num">2,50</td></tr>
+      <tr><td>Rodapé (distância)</td><td class="num">1,90</td></tr></tbody></table></div>
+      <span class="mea-warn"><b>DIV</b> A diretriz do site diz “3 cm”; o template mede 3,25 cm à esquerda e 3,34 cm à direita.</span><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-09</span><p>Publicar nas diretrizes os valores reais do template, para que autores e diagramação usem as mesmas margens.</p></div>
+    </div>
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Rodapé canônico</h3>
+      <div class="mea-ex"><code>Revbea, São Paulo, V. 21, No 1: 455-470, 2026.</code><button class="mea-copy" type="button" data-copy="Revbea, São Paulo, V. 21, No 1: 455-470, 2026.">Copiar</button></div>
+      <p class="mea-note">Cinza, ≈10 pt, “o” de “No” sobrescrito, espaço depois de “No” e depois de dois-pontos. O rodapé espelha: ímpar à direita, par à esquerda.</p><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-05</span><p>Gerar o rodapé por campo, em vez de digitar. Em publicação contínua, trocar o intervalo de páginas por identificador do artigo na capa (ex.: <code>2026;29:e00085</code>) e “n de N” no rodapé, como faz <i>Ambiente &amp; Sociedade</i>. Elimina intervalos incoerentes e grafias diferentes do mesmo rodapé.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-18</span><p>Cabeçalho corrido na versão final: sobrenomes dos autores nas páginas de texto e título curto nas demais. Nunca na versão cega.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="mea-section" id="tipografia">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">2 · Tipografia e parágrafo</h2></div><p class="mea-section-head__note">Uma só família, Arial, em todo o texto. Qualquer outra fonte embutida no PDF é desvio.</p></div>
+  <div class="mea-panel searchable"><div class="mea-tablewrap"><table class="mea-table">
+    <thead><tr><th>Elemento</th><th>Regra</th><th>Origem</th></tr></thead>
+    <tbody>
+    <tr><td>Corpo</td><td>Arial 12 pt, justificado, espaçamento simples, 6 pt depois do parágrafo</td><td>Template <span class="mea-pill mea-pill--tbd">DIV</span> parte dos parágrafos do modelo tem 0 pt</td></tr>
+    <tr><td>Recuo de 1ª linha</td><td>1,5 cm</td><td>Template</td></tr>
+    <tr><td>Sem recuo</td><td>Resumo, Abstract, palavras-chave, títulos, legendas, notas de autoria, referências</td><td>Template</td></tr>
+    <tr><td>Título</td><td>Arial negrito, caixa alta, centralizado, 25 pt (confirmar no .doc original)</td><td>Template</td></tr>
+    <tr><td>Seção nível 1</td><td>Arial 12 negrito, sem numeração</td><td>Template</td></tr>
+    <tr><td>Seção nível 2</td><td>Arial 12 negrito itálico</td><td>Template</td></tr>
+    <tr><td>Legendas e fontes</td><td>Arial 10 pt, rótulo (“Figura 1:”, “Fonte:”) em negrito</td><td>Template</td></tr>
+    <tr><td>Estrangeirismos</td><td>Itálico; itálico no lugar de sublinhado (exceto URLs)</td><td>Diretrizes</td></tr>
+    <tr><td>Hifenização</td><td>Desativada; e-mails e URLs sem quebra de linha</td><td>Padrão proposto</td></tr>
+    <tr><td>Fontes</td><td>Somente Arial (Arial Narrow só na logomarca); evitar Verdana, Calibri, Times e Cambria</td><td>Diretrizes</td></tr>
+    </tbody></table></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-10</span><p>Publicar um template corrigido, com estilos nomeados (Título, Resumo, Seção 1, Seção 2, Citação, Legenda, Referência). O modelo atual tem erros que os autores acabam copiando (“Abstract in Portuguese”, “jul. 195.”, hifenização manual, estilos em Cambria e Verdana).</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-11</span><p>Hifenização automática liberada no corpo justificado (como em <i>Ambiente &amp; Sociedade</i>), mas proibida em e-mails, URLs e nomes próprios, com espaço não separável.</p></div></div>
+</section>
+
+<!-- 3 -->
+<section class="mea-section" id="ordem">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">3 · Elementos, na ordem</h2></div><p class="mea-section-head__note">A sequência que o sistema monta e confere, do título às referências.</p></div>
+  <ol class="mea-steplist">
+    <li class="searchable"><div><b>Título</b><span>Negrito, caixa alta, centralizado; Sem autoria no arquivo enviado para avaliação.</span></div></li>
+    <li class="searchable"><div><b>Bloco de autoria</b><span>Um nome por linha, alinhado à direita, nome completo sem abreviação, número sobrescrito ligado à nota (seção 8). Montado a partir dos metadados do OJS.</span></div></li>
+    <li class="searchable"><div><b>Resumo e palavras-chave</b><span>Rótulo em negrito, justificado, máximo 10 linhas. De 3 a 5 palavras-chave separadas por ponto e vírgula, com ponto final.</span></div></li>
+    <li class="searchable"><div><b>Abstract e Keywords</b><span>Mesmas regras, em inglês, com conteúdo equivalente ao Resumo. Os quatro blocos ficam na mesma página.</span></div></li>
+    <li class="searchable"><div><b>Notas de autoria</b><span>Rodapé da primeira página, Arial 10 pt, um bloco por autor.</span></div></li>
+    <li class="searchable"><div><b>Corpo</b><span>Introdução, seções livres, Conclusões ou Considerações finais, Agradecimentos (opcional). Títulos sem numeração.</span></div></li>
+    <li class="searchable"><div><b>Referências</b><span>ABNT NBR 6023, em ordem alfabética, 6 pt entre itens (seção 6). Incluir ao menos um trabalho já publicado na RevBEA.</span></div></li>
+  </ol>
+  <div class="mea-grid mea-grid--2"><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-06</span><p>Trocar o limite de 10 linhas por um limite em palavras (por exemplo, 100 a 150), que não depende da diagramação, e exigir equivalência de conteúdo entre Resumo e Abstract.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-12</span><p>Manter Resumo, Abstract e palavras-chave na mesma página, com quebra controlada, e padronizar a caixa das palavras-chave.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-15</span><p>Capa de metadados: DOI, licença Creative Commons com ícone, tipo de artigo (Artigo ou Relato de experiência), volume e ano, datas de submissão e aceite. Resumo e palavras-chave na capa, texto a partir da página 2, o que fixa o tamanho da capa e evita página órfã.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-19</span><p>Resumo em espanhol, opcional, em página no fim do artigo, além do Abstract em inglês. Decisão dos editores.</p></div></div>
+</section>
+
+<!-- 4 -->
+<section class="mea-section" id="citacoes">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">4 · Citações</h2></div><p class="mea-section-head__note">Forma canônica adotada: (Autor, ano, p.). Os PDFs misturam sistemas.</p></div>
+  <div class="mea-panel">
+    <div class="mea-seg" role="tablist" style="margin-bottom:14px">
+      <button class="mea-seg__opt" role="tab" aria-selected="true" data-tab="c1">Forma canônica</button>
+      <button class="mea-seg__opt" role="tab" aria-selected="false" data-tab="c2">Citação longa</button>
+    </div>
+    <div id="c1" class="searchable">
+      <div class="mea-tablewrap"><table class="mea-table"><thead><tr><th>Caso</th><th>Modelo</th></tr></thead><tbody>
+      <tr><td>Um autor</td><td><code>(Silva, 2008, p. 12)</code></td></tr>
+      <tr><td>Dois ou mais, no parêntese</td><td><code>(Eler; Milani, 2007)</code></td></tr>
+      <tr><td>Dois ou mais, no texto corrido</td><td><code>Eler e Milani (2007)</code></td></tr>
+      <tr><td>Três ou mais</td><td><code>(Borges et al. 2011)</code></td></tr>
+      <tr><td>Mesmo autor e ano</td><td><code>(Borges et al. 2013a)</code></td></tr>
+      <tr><td>Obra sem autor</td><td><code>(Nos canaviais [...], 1995, p. 12)</code></td></tr>
+      </tbody></table></div>
+      <span class="mea-warn"><b>DIV</b> O template usa Autor com inicial maiúscula no parêntese; a ABNT NBR 10520/2023 pede SOBRENOME em caixa alta. O “&amp;” é convenção APA, não ABNT.</span><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-07</span><p>Adotar a ABNT NBR 10520 estrita: <code>(SOBRENOME, ano, p.)</code> em caixa alta, ponto e vírgula entre autores, “<i>et al.</i>” em itálico. É o que <i>Ambiente &amp; Sociedade</i> aplica; template e diretrizes mudam juntos.</p></div>
+    </div>
+    <div id="c2" class="searchable hidden">
+      <p>Parágrafo à parte, <b>recuo esquerdo de 4 cm</b>, justificado, sem aspas, fonte menor (10–11 pt; itálico no template, a confirmar). Introduzida por uma frase como <code>Segundo Fulano (2015, p.12),</code>.</p>
+      <p>Citação curta: entre aspas, no fluxo do texto, com página. Notas de rodapé: numeração automática em algarismos arábicos, em ordem crescente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="mea-section" id="figuras">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">5 · Figuras, quadros e tabelas</h2></div><p class="mea-section-head__note">Dentro do corpo, nunca em anexo; todas citadas no texto; fonte sempre indicada.</p></div>
+  <div class="mea-grid mea-grid--2">
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Figura</h3>
+      <p>Imagem centralizada. Legenda <b>abaixo</b> (regra atual do template), 10 pt, rótulo em negrito. Linha “Fonte:” em seguida.</p>
+      <div class="mea-ex"><code>Figura 1: Dizer o que a figura ilustra.
+Fonte: Silva (2008).</code></div>
+      <span class="mea-warn"><b>DIV</b> A ABNT NBR 14724 pede a identificação da figura <b>acima</b>, e a fonte abaixo.</span></div>
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Tabela ou quadro</h3>
+      <p>Legenda <b>acima</b>, 10 pt; “Fonte:” abaixo. Só linhas horizontais finas (0,5 pt), sem bordas verticais; largura ≈ 15,4 cm; cabeçalho em negrito, centralizado.</p>
+      <div class="mea-ex"><code>Tabela 1: Dizer o que a tabela ilustra.
+Fonte: autoria própria. | adaptado de Borges et al. (2013a).</code></div></div>
+  </div>
+<div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-17</span><p>Colocar a legenda de figuras e quadros acima, como em tabelas, seguindo a ABNT NBR 14724, e uniformizar a fórmula da fonte (“Fonte: Elaborado pelos autores.” ou “Fonte: Autor (ano).”).</p></div>
+</section>
+
+<!-- 6 -->
+<section class="mea-section" id="referencias">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">6 · Referências</h2></div><p class="mea-section-head__note">ABNT NBR 6023, alfabética, Arial 12, justificada, 6 pt entre itens, sem recuo.</p></div>
+  <div class="mea-panel">
+    <div class="mea-notice" style="margin-bottom:12px"><span class="mea-notice__i">i</span><div><b>Destaque do título:</b> adotado negrito <span class="mea-pill mea-pill--tbd">DIV</span> (o template mistura negrito e itálico; o site fala em negrito).</div></div>
+    <div id="refs"></div>
+    <p class="mea-note">Incluir ao menos um trabalho já publicado na RevBEA.</p><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-08</span><p>Aplicar a NBR 6023: negrito no <b>periódico</b> (artigos) ou no título da obra (livros), sem destaque no título do artigo. O template alterna negrito e itálico; o site fala em negrito.</p></div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="mea-section" id="numeracao">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">7 · Escopo, limites e numeração</h2></div><p class="mea-section-head__note">Rodapé: V. &lt;vol&gt;, No &lt;fasc&gt;: &lt;pág. inicial&gt;-&lt;pág. final&gt;, &lt;ano&gt;.</p></div>
+  <div class="mea-grid mea-grid--2">
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Escopo deste modelo</h3>
+      <ul class="mea-list"><li>Artigos e relatos de experiência usam o mesmo template</li><li>Limite de 20 páginas, incluindo referências</li><li>Arquivo para avaliação sem autoria; versão final com autoria</li></ul>
+      <p class="mea-note">Outras seções da revista têm regras próprias e ficam fora desta página.</p></div>
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Numeração</h3>
+      <ul class="mea-list"><li>Títulos de seção sem numeração</li><li>Figuras, quadros e tabelas numerados em sequência, em algarismos arábicos</li><li>Notas de rodapé automáticas, em ordem crescente</li></ul></div>
+  </div>
+  <div class="mea-grid mea-grid--2"><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-13</span><p>Aplicar o limite de 20 páginas já no pré-envio e informar ao autor quantas páginas faltam ou sobram.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-14</span><p>Gerar duas saídas a partir do mesmo arquivo: versão cega para avaliação e versão final com autoria, ORCID e Lattes.</p></div></div>
+</section>
+
+<!-- 8 -->
+<section class="mea-section" id="autoria">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">8 · Autoria, ORCID, Lattes e filiação</h2></div><p class="mea-section-head__note">Campo crítico. Preencha o exemplo (dados fictícios) e veja a nota de autoria canônica e as validações.</p></div>
+  <div class="mea-grid mea-grid--2" style="margin-bottom:16px">
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Campos de cada autor</h3>
+      <ul class="mea-list"><li>Nome completo, na ordem de autoria</li><li>Filiação: unidade, instituição, cidade, UF, país</li><li>ORCID e Lattes, em URL completa</li><li>E-mail, institucional de preferência</li><li>Indicação de autor correspondente</li></ul></div>
+    <div class="mea-panel searchable"><h3 class="mea-panel__title">Regras do formato canônico</h3>
+      <ul class="mea-list"><li>Unidade, instituição (SIGLA), cidade, UF, país</li><li>Sem cargo na filiação</li><li>Rótulos fixos: ORCID, Lattes, E-mail</li><li>URL completa, sem quebra e sem hifenização</li><li>Autor correspondente com asterisco</li></ul></div>
+  </div>
+  <div class="mea-grid mea-grid--2" style="margin-bottom:16px"><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-01</span><p>O template atual não prevê ORCID. Torná-lo campo padrão (obrigatório ou recomendado) e imprimi-lo na nota de autoria. O Lattes complementa, não substitui.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-02</span><p>Padronizar o Lattes como <code>https://lattes.cnpq.br/&lt;16 dígitos&gt;</code>, com hiperlink ativo e rótulo fixo.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-03</span><p>Adotar o modelo canônico de filiação (unidade, instituição com sigla, cidade, UF, país) e deixar cargo e titulação fora dela.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-04</span><p>Indicar o autor correspondente e avaliar um bloco padrão de contribuição dos autores (taxonomia CRediT), financiamento e conflitos de interesse.</p></div><div class="mea-opp"><span class="mea-pill mea-pill--tbd">Possibilidade de repadronização · OP-16</span><p>Página final de autoria: e-mail e ORCID de cada autor, editores responsáveis, datas de submissão e aceite e declaração de disponibilidade de dados. A primeira página passa a mostrar só instituição, cidade–UF e país, ligados aos autores por algarismos romanos sobrescritos. Substitui as notas de rodapé longas.</p></div></div>
+  <div class="mea-panel">
+    <h3 class="mea-panel__title">Construtor e validador de nota de autoria</h3>
+    <form class="mea-form" id="authform" autocomplete="off" onsubmit="return false">
+      <div class="mea-field"><label for="f_n">Nº da nota</label><input type="text" id="f_n" value="1"></div>
+      <div class="mea-field"><label for="f_un">Unidade ou programa</label><input type="text" id="f_un" value="Programa de Pós-Graduação em Educação Ambiental"></div>
+      <div class="mea-field"><label for="f_in">Instituição</label><input type="text" id="f_in" value="Universidade Exemplo"></div>
+      <div class="mea-field"><label for="f_si">Sigla</label><input type="text" id="f_si" value="UEX"></div>
+      <div class="mea-field"><label for="f_ci">Cidade</label><input type="text" id="f_ci" value="Cidade Exemplo"></div>
+      <div class="mea-field"><label for="f_uf">UF</label><input type="text" id="f_uf" value="SP"></div>
+      <div class="mea-field"><label for="f_pa">País</label><input type="text" id="f_pa" value="Brasil"></div>
+      <div class="mea-field"><label for="f_or">ORCID (id ou URL)</label><input type="text" id="f_or" value="0000-0002-1825-0097"></div>
+      <div class="mea-field"><label for="f_la">Lattes (id ou URL)</label><input type="text" id="f_la" value="http://lattes.cnpq.br/1234567890123456"></div>
+      <div class="mea-field"><label for="f_em">E-mail</label><input type="email" id="f_em" value="autor@exemplo.edu.br"></div>
+      <div class="mea-field mea-field--wide"><label class="mea-check"><input type="checkbox" id="f_co" checked> Autor correspondente</label></div>
+    </form>
+    <div class="mea-out"><small>Nota de autoria gerada (Arial 10 pt)</small><div id="outnote" class="mea-out__txt"></div>
+      <div style="margin-top:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="mea-btn mea-btn--primary" type="button" id="copynote">Copiar nota</button> <span class="mea-note" style="margin:0" id="copymsg"></span></div></div>
+    <ul class="mea-checks" id="checks" aria-live="polite"></ul>
+    <p class="mea-note">O ORCID usa o dígito verificador ISO 7064 mod 11-2 (o exemplo <code>0000-0002-1825-0097</code> é o ORCID de teste oficial). Não existe dígito verificador público para o Lattes: a conferência cobre o formato (16 dígitos) e a normalização da URL; a existência do currículo só se confirma consultando-o.</p>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="mea-section" id="melhorias">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">9 · Decisão dos editores</h2></div><p class="mea-section-head__note">Para cada proposta de repadronização, escolha a decisão e registre a definição. Os campos ficam salvos neste navegador. Ao terminar, use “Copiar decisões” e envie o texto por e-mail ou mensagem.</p></div>
+  <div class="mea-panel">
+    <h3 class="mea-panel__title">Identificação</h3>
+    <div class="mea-metaform">
+      <div class="mea-field"><label for="m_nome">Editor ou editora</label><input type="text" id="m_nome"></div>
+      <div class="mea-field"><label for="m_data">Data da decisão</label><input type="text" id="m_data" placeholder="dd/mm/aaaa"></div>
+    </div>
+    <div class="mea-prog"><div class="mea-prog__bar"><div id="pfill"></div></div><span id="ptxt" class="mea-note" style="margin:0"></span></div>
+    <div class="mea-actions">
+      <button class="mea-btn mea-btn--primary" type="button" id="copypauta">Copiar decisões</button>
+      <button class="mea-btn mea-btn--secondary" type="button" id="clrpauta">Limpar decisões</button>
+      <span class="mea-note" style="margin:0" id="pautamsg" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="mea-items" id="mel"></div>
+</section>
+
+<!-- 10 -->
+<section class="mea-section" id="lacunas">
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">10 · Pontos em aberto</h2></div><p class="mea-section-head__note">Itens que o modelo não inventa. Dependem do arquivo original ou de decisão dos editores.</p></div>
+  <div class="mea-panel searchable"><ul class="mea-list">
+    <li>Tamanho exato do título (25 pt?) e da citação longa, a conferir no .doc original.</li>
+    <li>Layout exato do cabeçalho e do bloco de autoria no PDF final.</li>
+    <li>Política dos editores para ORCID obrigatório, DOI, licença CC e “Como citar” no PDF final.</li>
+    <li>Existência de campo de biografia ou cargo no OJS, para tirar o cargo da filiação.</li>
+  </ul></div>
+</section>
+</main>
+
+<footer class="mea-footer">
+  <div class="mea-wrap">
+    <p><b>Modelo de formatação RevBEA</b> · v0.3 · 13/11/2026</p>
+    <p>Fontes: template oficial (.doc, medido), diretrizes do site da revista e comparação com o layout final de <i>Ambiente &amp; Sociedade</i> (SciELO, 2026). Vale para artigos e relatos de experiência. Os exemplos são fictícios.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function store(k,v){try{if(v===undefined){return localStorage.getItem(k)}localStorage.setItem(k,v)}catch(e){return null}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function copyText(t,msgEl){
+  var done=function(ok){if(msgEl){msgEl.textContent=ok?'Copiado.':'Não foi possível copiar; selecione o texto e copie.';setTimeout(function(){msgEl.textContent=''},2500)}};
+  try{navigator.clipboard.writeText(t).then(function(){done(true)},function(){done(false)})}catch(e){done(false)}
+}
+
+/* índice e navegação */
+var SECS=[['pagina','Página e rodapé'],['tipografia','Tipografia'],['ordem','Elementos'],['citacoes','Citações'],['figuras','Figuras e tabelas'],['referencias','Referências'],['numeracao','Escopo e numeração'],['autoria','Autoria, ORCID e Lattes'],['melhorias','Decisão dos editores'],['lacunas','Pontos em aberto']];
+var idx=$('#index'), jump=$('#jump');
+jump.insertAdjacentHTML('beforeend','<option value="">Escolha uma seção</option>');
+SECS.forEach(function(s,i){
+  idx.insertAdjacentHTML('beforeend','<a class="mea-seg__opt" href="#'+s[0]+'"><span class="mea-seg__n">'+(i+1)+'</span>'+s[1]+'</a>');
+  jump.insertAdjacentHTML('beforeend','<option value="'+s[0]+'">'+(i+1)+' · '+s[1]+'</option>');
+});
+jump.addEventListener('change',function(){var el=document.getElementById(jump.value);if(el){el.scrollIntoView()}});
+
+/* copiar genérico */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-copy]');
+  if(b){var old=b.textContent;copyText(b.getAttribute('data-copy'));b.textContent='Copiado';setTimeout(function(){b.textContent=old},1400)}
+});
+
+/* anatomia da página */
+var PAGES={
+ p1:{zones:[
+  {id:'tit',l:'Título',x:65,y:56,w:300,h:76,t:'Título',r:['Arial negrito, caixa alta, centralizado','25 pt no template (confirmar no .doc)','Sem autoria no arquivo enviado para avaliação']},
+  {id:'aut',l:'Autoria',x:215,y:140,w:150,h:32,t:'Bloco de autoria',r:['Um nome por linha, alinhado à direita','Nome completo, sem abreviações','Número sobrescrito liga à nota de rodapé (seção 8)','Montado a partir dos metadados do OJS']},
+  {id:'res',l:'Resumo + palavras-chave',x:65,y:184,w:300,h:80,t:'Resumo e palavras-chave',r:['Rótulo “Resumo:” em negrito, justificado, sem recuo','Máximo 10 linhas (ver OP-06)','De 3 a 5 palavras-chave separadas por ponto e vírgula','Ponto final após a última']},
+  {id:'abs',l:'Abstract + keywords',x:65,y:274,w:300,h:80,t:'Abstract e keywords',r:['Mesmas regras, em inglês','Conteúdo equivalente ao Resumo (conferir listas e números)','Manter na mesma página do Resumo (OP-12)']},
+  {id:'not',l:'Notas de autoria',x:65,y:412,w:300,h:64,t:'Notas de autoria',r:['Filete curto acima, Arial 10 pt','Um bloco por autor: filiação, ORCID, Lattes, e-mail','Rótulos fixos e URL sem quebra','Autor correspondente com asterisco','Proposta: mover e-mail e ORCID para a página final de autoria (OP-16)']},
+  {id:'rod',l:'Rodapé: texto',x:165,y:486,w:200,h:14,t:'Rodapé (ímpar)',r:['Revbea, São Paulo, V. X, No Y: pp-pp, AAAA.','Alinhado à direita, cinza ≈10 pt','Gerado por campo, nunca digitado']},
+  {id:'log',l:'Logo + nº',x:372,y:470,w:52,h:60,t:'Logomarca e número de página',r:['Filete vertical, logomarca “revista brasileira de educação ambiental”','Número da página em negrito','Página par: bloco espelhado à esquerda']}
+ ]},
+ int:{zones:[
+  {id:'h1',l:'Introdução',x:65,y:56,w:120,h:16,t:'Título de seção (nível 1)',r:['Arial 12 negrito, sem numeração','Sem recuo']},
+  {id:'par',l:'Parágrafo com recuo 1,5 cm',x:65,y:80,w:300,h:90,t:'Parágrafo',r:['Arial 12, justificado, espaçamento simples','Recuo de primeira linha 1,5 cm','6 pt depois do parágrafo']},
+  {id:'fig',l:'Figura',x:95,y:180,w:240,h:130,t:'Figura',r:['Centralizada, dentro do corpo','Mencionar no texto antes de aparecer']},
+  {id:'leg',l:'Legenda + Fonte',x:95,y:314,w:240,h:30,t:'Legenda e fonte',r:['Legenda abaixo, 10 pt, “Figura N:” em negrito','Linha “Fonte:” em seguida (autoria própria ou ABNT)']},
+  {id:'h2',l:'Subtítulo',x:65,y:356,w:170,h:16,t:'Título de seção (nível 2)',r:['Arial 12 negrito itálico']},
+  {id:'cit',l:'Citação longa (recuo 4 cm)',x:127,y:380,w:238,h:60,t:'Citação direta longa',r:['Recuo esquerdo 4 cm, justificada, sem aspas','Fonte menor (10–11 pt; confirmar)','Chamada: Segundo Fulano (2015, p.12),']},
+  {id:'rod',l:'Rodapé: texto',x:165,y:486,w:200,h:14,t:'Rodapé (ímpar)',r:['Revbea, São Paulo, V. X, No Y: pp-pp, AAAA.','Alinhado à direita, cinza ≈10 pt']},
+  {id:'log',l:'Logo + nº',x:372,y:470,w:52,h:60,t:'Logomarca e número de página',r:['Número da página em negrito','Filete vertical à esquerda do bloco']}
+ ]},
+ par:{zones:[
+  {id:'par',l:'Corpo do texto',x:65,y:56,w:300,h:340,t:'Corpo',r:['Mesmas regras da página ímpar','Margens: esquerda 3,25 · direita 3,34 cm']},
+  {id:'rod',l:'Rodapé: texto',x:65,y:486,w:200,h:14,t:'Rodapé (par)',r:['Mesmo texto, alinhado à esquerda','Número e logo ficam à esquerda do texto']},
+  {id:'log',l:'Logo + nº',x:8,y:470,w:52,h:60,t:'Logomarca e número (par)',r:['Bloco espelhado em relação à página ímpar','Número da página em negrito']}
+ ]}
+};
+var curPg='p1';
+function drawPage(){
+  var svg=$('#svgpage'), z=PAGES[curPg].zones, h='';
+  h+='<rect x="0" y="0" width="432" height="558" fill="#fff"/>';
+  h+='<line class="guide" x1="65" y1="0" x2="65" y2="558"/><line class="guide" x1="365" y1="0" x2="365" y2="558"/><line class="guide" x1="0" y1="50" x2="432" y2="50"/><line class="guide" x1="0" y1="508" x2="432" y2="508"/>';
+  h+='<text class="gtxt" x="6" y="30">esq. 3,25 cm</text><text class="gtxt" x="372" y="30">dir. 3,34 cm</text><text class="gtxt" x="150" y="44">sup. 2,50 cm</text><text class="gtxt" x="150" y="520">inf. 2,50 cm</text>';
+  z.forEach(function(q){
+    h+='<rect class="zone" tabindex="0" role="button" aria-label="'+esc(q.t)+'" data-z="'+q.id+'" x="'+q.x+'" y="'+q.y+'" width="'+q.w+'" height="'+q.h+'" rx="3"/>';
+    h+='<text class="ztxt" x="'+(q.x+6)+'" y="'+(q.y+(q.h>20?14:11))+'">'+esc(q.l)+'</text>';
+  });
+  if(curPg==='p1'){h+='<line x1="65" y1="408" x2="140" y2="408" stroke="#001b43" stroke-width="1"/>'}
+  svg.innerHTML=h;
+  $$('.zone',svg).forEach(function(el){
+    var go=function(){selectZone(el.getAttribute('data-z'))};
+    el.addEventListener('click',go);
+    el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+  });
+  selectZone(z[0].id);
+}
+function selectZone(id){
+  var q=PAGES[curPg].zones.filter(function(x){return x.id===id})[0]; if(!q)return;
+  $$('.zone').forEach(function(el){el.classList.toggle('on',el.getAttribute('data-z')===id)});
+  $('#panel').innerHTML='<h3>'+esc(q.t)+'</h3><ul class="mea-list">'+q.r.map(function(r){return '<li>'+esc(r)+'</li>'}).join('')+'</ul>';
+}
+$$('[data-pg]').forEach(function(b){b.addEventListener('click',function(){
+  curPg=b.getAttribute('data-pg');
+  $$('[data-pg]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+  drawPage();
+})});
+drawPage();
+
+/* abas de citações */
+$$('[data-tab]').forEach(function(t){t.addEventListener('click',function(){
+  $$('[data-tab]').forEach(function(x){x.setAttribute('aria-selected',x===t?'true':'false')});
+  ['c1','c2'].forEach(function(id){document.getElementById(id).classList.toggle('hidden',id!==t.getAttribute('data-tab'))});
+})});
+
+/* referências */
+var REFS=[
+ ['Livro','BARBETTA, Pedro Alberto; REIS, Marcelo Meneses; BORNIA, Antônio Cezar. Estatística para cursos de engenharia e informática. 3. ed. São Paulo: Atlas, 2010.'],
+ ['Artigo de periódico','SOBRENOME, Nome. Título do artigo. Nome do periódico, v. 6, n. 1, p. 1-3, mar. 2013. DOI: https://doi.org/10.0000/exemplo. Disponível em: URL. Acesso em: 27 jun. 2024.'],
+ ['Legislação','BRASIL. Lei n. 9.795, de 27 de abril de 1999. Dispõe sobre a educação ambiental, institui a Política Nacional de Educação Ambiental e dá outras providências. Brasília, DF, 1999. Disponível em: URL. Acesso em: 15 jan. 2012.'],
+ ['Tese','SOBRENOME, Nome. Título da tese. Orientador(a): Nome. 2020. 389 f. Tese (Doutorado em Área) – Instituição, Programa, 2020. Disponível em: URL. Acesso em: 15 set. 2023.'],
+ ['Autor institucional','GTDS. Relatório final. Porto Velho: Universidade Federal de Rondônia, 2006.'],
+ ['Capítulo de livro','SOBRENOME, Nome. Título do capítulo. In: ORGANIZADOR, Nome (coord.). Título da obra. Cidade: Editora, 2003.'],
+ ['Jornal sem autor','NOS CANAVIAIS, mutilações em vez de lazer e escola. O Globo, Rio de Janeiro, ano 70, n. 22.516, 16 jul. 1995. O País, p. 12.']
+];
+var rf=$('#refs');
+REFS.forEach(function(r,i){
+  rf.insertAdjacentHTML('beforeend','<details class="mea-sheet searchable"'+(i===1?' open':'')+'><summary>'+esc(r[0])+'</summary><div class="mea-sheet__body"><div class="mea-ex"><code>'+esc(r[1])+'</code><button class="mea-copy" type="button" data-copy="'+esc(r[1])+'">Copiar</button></div></div></details>');
+});
+
+/* validadores */
+function orcidCheck(raw){
+  var d=String(raw||'').trim().replace(/^https?:\/\/(www\.)?orcid\.org\//i,'').replace(/[\s-]/g,'').toUpperCase();
+  if(!d)return {ok:false,empty:true};
+  if(!/^\d{15}[\dX]$/.test(d))return {ok:false,msg:'precisa de 16 caracteres (15 dígitos e um dígito final, que pode ser X)'};
+  var tot=0,i;for(i=0;i<15;i++){tot=(tot+parseInt(d.charAt(i),10))*2}
+  var r=(12-tot%11)%11, ch=(r===10)?'X':String(r);
+  if(d.charAt(15)!==ch)return {ok:false,msg:'dígito verificador inválido (esperado '+ch+')'};
+  return {ok:true,id:d.slice(0,4)+'-'+d.slice(4,8)+'-'+d.slice(8,12)+'-'+d.slice(12)};
+}
+function lattesCheck(raw){
+  raw=String(raw||'').trim(); if(!raw)return {ok:false,empty:true};
+  var http=/^http:\/\//i.test(raw);
+  var m=raw.match(/lattes\.cnpq\.br\/(\w+)/i), id=(m?m[1]:raw).replace(/\s/g,'');
+  if(!/^\d+$/.test(id))return {ok:false,msg:'o identificador deve ter só dígitos'};
+  if(id.length!==16)return {ok:false,msg:'precisa de 16 dígitos (tem '+id.length+')'};
+  return {ok:true,id:id,http:http};
+}
+function render(){
+  var v=function(id){return ($('#'+id).value||'').trim()};
+  var o=orcidCheck(v('f_or')), l=lattesCheck(v('f_la')), email=v('f_em');
+  var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  var parts=[v('f_un'),v('f_in')+(v('f_si')?' ('+v('f_si')+')':''),v('f_ci'),v('f_uf'),v('f_pa')].filter(function(x){return x});
+  var note=v('f_n')+($('#f_co').checked?'*':'')+' '+parts.join(', ')+'.';
+  if(o.ok)note+=' ORCID: https://orcid.org/'+o.id+'.';
+  if(l.ok)note+=' Lattes: https://lattes.cnpq.br/'+l.id+'.';
+  if(emailOk)note+=' E-mail: '+email+'.';
+  $('#outnote').textContent=note;
+  var c=[];
+  var add=function(s,t){c.push('<li><span class="st '+s+'">'+({ok:'✓ OK',warn:'! Alerta',err:'× Erro'}[s])+'</span><span>'+t+'</span></li>')};
+  if(o.empty)add('warn','ORCID não informado: campo recomendado (OP-01).'); else if(o.ok)add('ok','ORCID válido e normalizado: '+esc(o.id)); else add('err','ORCID inválido: '+esc(o.msg));
+  if(l.empty)add('err','Lattes ausente.'); else if(l.ok){add('ok','Lattes com 16 dígitos.'); if(l.http)add('warn','URL em http: normalizada para https (OP-02).')} else add('err','Lattes inválido: '+esc(l.msg));
+  add(emailOk?'ok':'err',emailOk?'E-mail com sintaxe válida.':'E-mail inválido ou ausente.');
+  add(v('f_in')?'ok':'err',v('f_in')?'Instituição informada.':'Instituição ausente.');
+  add(v('f_si')?'ok':'warn',v('f_si')?'Sigla informada, com expansão presente.':'Sigla não informada: instituição sem sigla (OP-03).');
+  var loc=v('f_ci')&&v('f_uf')&&v('f_pa');
+  add(loc?'ok':'warn',loc?'Cidade, UF e país completos.':'Falta cidade, UF ou país (OP-03).');
+  var cargo=/professor|doutor|mestre|discente|titular/i.test(v('f_un')+' '+v('f_in'));
+  add(cargo?'warn':'ok',cargo?'Cargo ou titulação dentro da filiação: mover para a biografia.':'Filiação sem cargo ou titulação.');
+  add($('#f_co').checked?'ok':'warn',$('#f_co').checked?'Autor correspondente marcado (asterisco).':'Nenhum autor correspondente marcado neste bloco (OP-04).');
+  $('#checks').innerHTML=c.join('');
+}
+$$('#authform input').forEach(function(i){i.addEventListener('input',render);i.addEventListener('change',render)});
+$('#copynote').addEventListener('click',function(){copyText($('#outnote').textContent,$('#copymsg'))});
+render();
+
+/* melhorias */
+var STATUS=['Aprovar','Aprovar com ajuste','Não adotar','Adiar'];
+var MEL=[
+ {n:1,t:'ORCID como campo padrão',now:'O template não prevê ORCID; só há Lattes.',prop:'Campo padrão no bloco de autoria (obrigatório ou recomendado), com validação do dígito verificador e URL https://orcid.org/…',why:'Desambiguação de autoria, indexação e integração com Crossref e SciELO.'},
+ {n:2,t:'Lattes em formato único',now:'Rótulo, pontuação e protocolo variam conforme o preenchimento.',prop:'https://lattes.cnpq.br/<16 dígitos>, rótulo fixo “Lattes:”, hiperlink ativo.',why:'Link seguro e aparência consistente.'},
+ {n:3,t:'Filiação padronizada',now:'Sem modelo: unidade, sigla, cargo e localidade entram de forma livre.',prop:'Unidade, instituição (SIGLA), cidade, UF, país; cargo e titulação fora da filiação.',why:'Atribuição institucional inequívoca em indexadores.'},
+ {n:4,t:'Autor correspondente e declarações',now:'Não há indicação de autor correspondente nem bloco de contribuição, financiamento ou conflitos.',prop:'Asterisco no autor correspondente; avaliar bloco padrão com CRediT, financiamento e conflitos de interesse.',why:'Ponto de contato claro e transparência editorial.'},
+ {n:5,t:'Rodapé e identificador por campo',now:'Rodapé digitado; paginação pode ser contínua por volume ou por artigo, sem regra declarada.',prop:'Gerar o rodapé por campo e, em publicação contínua, usar identificador do artigo (2026;29:e00085) e “n de N” no lugar do intervalo de páginas.',why:'Evita grafias diferentes e intervalos incoerentes na citação e nos metadados. Referência: Ambiente & Sociedade.'},
+ {n:6,t:'Resumo limitado em palavras',now:'Limite de 10 linhas, que depende da diagramação.',prop:'Limite em palavras (por exemplo, 100 a 150) e equivalência de conteúdo entre Resumo e Abstract.',why:'Regra verificável e independente do layout; evita Abstract desproporcional.'},
+ {n:7,t:'Sistema de citação fechado',now:'Template usa Autor em caixa mista; a NBR 10520/2023 pede caixa alta; “et al.” e separadores não estão definidos.',prop:'(SOBRENOME, ano, p.) em caixa alta, “;” entre autores, “et al.” em itálico, no template e nas diretrizes.',why:'Consistência com a norma adotada. Referência: Ambiente & Sociedade.'},
+ {n:8,t:'Destaque do título nas referências',now:'Template alterna negrito e itálico; o site fala em negrito.',prop:'Negrito no periódico (artigos) ou no título da obra (livros), sem destaque no título do artigo.',why:'Segue a NBR 6023. Referência: Ambiente & Sociedade.'},
+ {n:9,t:'Margens declaradas com valores reais',now:'Diretriz diz 3 cm; template mede 3,25 e 3,34 cm.',prop:'Publicar os valores do template.',why:'Autores e diagramação seguem a mesma medida.'},
+ {n:10,t:'Template corrigido e com estilos nomeados',now:'Modelo com erros (“Abstract in Portuguese”, “jul. 195.”, hifenização manual) e estilos em Cambria e Verdana.',prop:'Template corrigido, só Arial, estilos nomeados: Título, Resumo, Seção 1, Seção 2, Citação, Legenda, Referência.',why:'Autores deixam de copiar erros e a conversão automática fica confiável.'},
+ {n:11,t:'Hifenização só no corpo; e-mail e URL sem quebra',now:'Hifenização ativa também nas notas de autoria pode partir “E-mail” e links.',prop:'Hifenização automática no corpo; proibida em e-mails, URLs e nomes próprios, com espaço não separável.',why:'Links íntegros e texto justificado sem buracos.'},
+ {n:12,t:'Resumo, Abstract e palavras-chave juntos',now:'Sem regra de quebra: palavras-chave podem cair sozinhas em outra página.',prop:'Manter os quatro blocos na mesma página, com quebra controlada; 3 a 5 palavras-chave com caixa padronizada.',why:'Evita página órfã e intervalo de páginas errado.'},
+ {n:13,t:'Limite de 20 páginas verificado no pré-envio',now:'Limite publicado, sem verificação automática.',prop:'Conferir a contagem antes do envio e informar a margem restante.',why:'Regra aplicada igualmente a todos.'},
+ {n:15,t:'Capa de metadados',now:'O template não prevê DOI, licença, tipo de artigo nem datas na capa.',prop:'DOI, licença CC, tipo de artigo, volume e ano, datas de submissão e aceite; resumo e palavras-chave na capa, texto a partir da página 2.',why:'Citação e indexação corretas; capa de tamanho fixo. Referência: Ambiente & Sociedade.'},
+ {n:16,t:'Página final de autoria e declarações',now:'Filiação, ORCID, Lattes e e-mail em notas de rodapé na primeira página.',prop:'Primeira página só com instituição, cidade–UF e país (algarismos romanos); página final com e-mail, ORCID, editores, datas e declaração de disponibilidade de dados.',why:'Primeira página limpa, dados pessoais num só lugar, mais fácil de validar e atualizar. Referência: Ambiente & Sociedade.'},
+ {n:17,t:'Legenda de figuras acima',now:'Template põe a legenda de figuras abaixo e a de tabelas acima.',prop:'Legenda acima em figuras, quadros e tabelas; “Fonte:” abaixo, com fórmula única.',why:'Segue a ABNT NBR 14724 e uniformiza os elementos.'},
+ {n:18,t:'Cabeçalho corrido na versão final',now:'Sem regra de cabeçalho corrido.',prop:'Sobrenomes dos autores nas páginas de texto e título curto nas demais; só na versão final.',why:'Identificação de cada página. Referência: Ambiente & Sociedade.'},
+ {n:19,t:'Resumo em espanhol, opcional',now:'Só Resumo em português e Abstract em inglês.',prop:'Resumen opcional, em página no fim do artigo.',why:'Alcance na América Latina; decisão dos editores. Referência: Ambiente & Sociedade.'},
+ {n:14,t:'Duas saídas: versão cega e versão final',now:'O template pede arquivo sem autoria, mas o PDF final exibe autoria, Lattes e rodapé.',prop:'Gerar duas versões do mesmo arquivo: cega para avaliação e final com autoria.',why:'Preserva o duplo-cego sem retrabalho.'}
+];
+MEL.sort(function(a,b){return a.n-b.n});
+function oid(n){return 'OP-'+(n<10?'0':'')+n}
+var KEY='revbea-decisoes-v1', D={meta:{nome:'',data:''},d:{}};
+try{var raw=store(KEY); if(raw){var p=JSON.parse(raw); if(p&&p.d){D=p; D.meta=D.meta||{nome:'',data:''}}}}catch(e){}
+function save(){store(KEY,JSON.stringify(D))}
+function getD(n){return D.d[n]||(D.d[n]={s:'',t:''})}
+function decidedCount(){return MEL.filter(function(m){return getD(m.n).s}).length}
+function prog(){
+  var n=decidedCount();
+  $('#pfill').style.width=(n/MEL.length*100)+'%';
+  $('#ptxt').textContent=n+' de '+MEL.length+' propostas decididas';
+}
+function badges(){
+  $$('.mea-opp').forEach(function(el){
+    var pill=el.querySelector('.mea-pill'); if(!pill)return;
+    var mt=pill.textContent.match(/OP-(\d+)/); if(!mt)return;
+    var n=parseInt(mt[1],10), st=getD(n).s, a=el.querySelector('.mea-opp__go');
+    if(!a){a=document.createElement('a');a.className='mea-opp__go';a.href='#op'+n;pill.insertAdjacentElement('afterend',a)}
+    a.textContent=st?('Decisão: '+st):'Decidir na seção 9';
+  });
+}
+function renderMel(){
+  var h='';
+  MEL.forEach(function(m){
+    var d=getD(m.n);
+    h+='<article class="mea-panel mea-item searchable" id="op'+m.n+'" data-s="'+esc(d.s)+'"><div class="mea-item__head"><span class="mea-item__id">'+oid(m.n)+'</span></div><h3>'+esc(m.t)+'</h3><dl><dt>Hoje</dt><dd>'+esc(m.now)+'</dd><dt>Proposta</dt><dd>'+esc(m.prop)+'</dd><dt>Por quê</dt><dd>'+esc(m.why)+'</dd></dl>'
+     +'<div class="mea-decide"><p class="mea-decide__lbl">Decisão</p><div class="mea-seg" role="group" aria-label="Decisão para '+oid(m.n)+'">'
+     +STATUS.map(function(x){return '<button class="mea-seg__opt" type="button" data-n="'+m.n+'" data-st="'+esc(x)+'" aria-pressed="'+(d.s===x)+'">'+esc(x)+'</button>'}).join('')
+     +'</div><div class="mea-field"><label for="t'+m.n+'">Definição ou observação (escolha adotada, ajuste, prazo)</label><textarea id="t'+m.n+'" data-n="'+m.n+'">'+esc(d.t)+'</textarea></div></div></article>';
+  });
+  $('#mel').innerHTML=h;
+  $('#m_nome').value=D.meta.nome||''; $('#m_data').value=D.meta.data||'';
+  prog(); badges(); applySearch();
+}
+$('#mel').addEventListener('click',function(e){
+  var b=e.target.closest('[data-st]'); if(!b)return;
+  var n=b.getAttribute('data-n'), d=getD(n), st=b.getAttribute('data-st');
+  d.s=(d.s===st)?'':st; save();
+  var art=document.getElementById('op'+n); art.setAttribute('data-s',d.s);
+  $$('[data-st]',art).forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-st')===d.s?'true':'false')});
+  prog(); badges();
+});
+$('#mel').addEventListener('input',function(e){
+  var n=e.target.getAttribute('data-n'); if(!n||e.target.tagName!=='TEXTAREA')return;
+  getD(n).t=e.target.value; save();
+});
+$('#m_nome').addEventListener('input',function(e){D.meta.nome=e.target.value;save()});
+$('#m_data').addEventListener('input',function(e){D.meta.data=e.target.value;save()});
+function resumo(){
+  var l=['RevBEA – decisões sobre as propostas de repadronização','Editor(a): '+(D.meta.nome||'não informado')+' · Data: '+(D.meta.data||'não informada'),'Decididas: '+decidedCount()+' de '+MEL.length,''];
+  MEL.forEach(function(m){var d=getD(m.n);l.push(oid(m.n)+' · '+m.t+'\n  Decisão: '+(d.s||'pendente')+(d.t?'\n  Definição: '+d.t:''))});
+  return l.join('\n');
+}
+$('#copypauta').addEventListener('click',function(){copyText(resumo(),$('#pautamsg'))});
+var clrT=null;
+$('#clrpauta').addEventListener('click',function(){
+  var btn=$('#clrpauta');
+  if(!clrT){btn.textContent='Confirmar limpeza';clrT=setTimeout(function(){btn.textContent='Limpar decisões';clrT=null},4000);return}
+  clearTimeout(clrT);clrT=null;btn.textContent='Limpar decisões';
+  D={meta:{nome:'',data:''},d:{}}; save(); renderMel();
+});
+$('#tilemel').textContent=MEL.length;
+
+/* busca */
+function applySearch(){
+  var q=($('#q').value||'').trim().toLowerCase(), n=0;
+  $$('.searchable').forEach(function(el){
+    var hit=!q||el.textContent.toLowerCase().indexOf(q)>-1;
+    el.classList.toggle('hidden',!hit);
+    if(hit)n++;
+  });
+  if(!q){
+    var sel=$('[data-tab][aria-selected="true"]');
+    ['c1','c2'].forEach(function(id){document.getElementById(id).classList.toggle('hidden',!sel||id!==sel.getAttribute('data-tab'))});
+  }
+  $('#qcount').textContent=q?(n+(n===1?' bloco encontrado':' blocos encontrados')):'';
+}
+$('#q').addEventListener('input',applySearch);
+renderMel();
+})();
+</script>
+</body>
+</html>
