@@ -204,6 +204,22 @@ ul.mea-checks li{display:flex;gap:10px;align-items:baseline;font-size:13px}
 .mea-item[data-s="Não adotar"]{box-shadow:inset 4px 0 0 var(--mea-red-600),var(--shadow-card)}
 .mea-item[data-s="Adiar"]{box-shadow:inset 4px 0 0 var(--mea-amber-800),var(--shadow-card)}
 .mea-opp__go{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:600;color:var(--mea-blue-800)}
+.mea-pill--ok{background:#d9f2e3;color:#00522b}
+.mea-pill--adj{background:var(--mea-blue-50);color:var(--mea-blue-800)}
+.mea-pill--no{background:#fbe3e5;color:var(--mea-red-600)}
+.mea-sumline{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.mea-sendstate{margin-top:14px;border-radius:var(--radius-box);padding:12px 16px;font-size:13.5px;display:none}
+.mea-sendstate.show{display:block}
+.mea-sendstate.ok{background:#d9f2e3;color:#00391d}
+.mea-sendstate.err{background:#fbe3e5;color:#7a000b}
+.mea-sendstate.info{background:var(--mea-blue-50);color:var(--mea-blue-900)}
+.mea-sendstate.warn{background:var(--mea-amber-50);color:var(--mea-amber-800)}
+.mea-send{border:2px solid var(--mea-blue-600);scroll-margin-top:96px}
+.mea-btn--ghost{background:transparent;color:var(--ink-soft);text-decoration:underline;padding:0 10px}
+.mea-sticky{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:30;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;background:var(--paper-raised);border-radius:var(--radius-pill);box-shadow:var(--shadow-pop);padding:10px 12px 10px 22px;max-width:calc(100vw - 24px)}
+.mea-sticky__t{font-size:13px;font-weight:600;color:var(--mea-blue-900)}
+.mea-sticky .mea-btn{min-height:40px}
+.mea-req{color:var(--mea-red-600)}
 /* rodapé */
 .mea-footer{background:var(--mea-blue-800);color:var(--mea-gray-0);padding-block:28px 36px;margin-top:var(--space-7)}
 .mea-footer p{color:var(--mea-blue-100);margin:0 0 4px;font-size:12.5px}
@@ -228,7 +244,7 @@ ul.mea-checks li{display:flex;gap:10px;align-items:baseline;font-size:13px}
       <h1 class="mea-header__title">Modelo de formatação RevBEA</h1>
       <p class="mea-header__sub">Revista Brasileira de Educação Ambiental · artigos e relatos de experiência</p>
     </div>
-    <span class="mea-header__tag">v0.3 · 13/11/2026</span>
+    <span class="mea-header__tag">v0.7 · 13/11/2026</span>
   </div>
   <div class="mea-header__stripe"></div>
 </header>
@@ -255,11 +271,6 @@ ul.mea-checks li{display:flex;gap:10px;align-items:baseline;font-size:13px}
     <div class="mea-panel"><p class="mea-panel__label">Texto</p><div class="mea-bignum"><span class="mea-bignum__n">Arial 12</span></div><p class="mea-note">justificado, espaçamento simples, recuo de 1,5 cm</p></div>
     <div class="mea-panel"><p class="mea-panel__label">Extensão</p><div class="mea-bignum"><span class="mea-bignum__n">20 pág.</span></div><p class="mea-note">limite, incluindo referências</p></div>
     <div class="mea-panel"><p class="mea-panel__label">Repadronização</p><div class="mea-bignum"><span class="mea-bignum__n" id="tilemel">0</span></div><p class="mea-note">propostas para decisão dos editores, na seção 9</p></div>
-  </div>
-  <div class="mea-panel" style="margin-top:16px">
-    <h2 class="mea-panel__title">Como ler esta página</h2>
-    <p class="mea-lead">Esta página declara o modelo de formatação das seções <b>Artigos</b> e <b>Relatos de experiência</b>: o layout final que o sistema vai aplicar ao manuscrito aprovado e o template que os autores usam. As regras vêm do template oficial, medido, e das diretrizes do site; as propostas também consideram a prática de outras revistas. Quando as duas fontes divergem, aparece <span class="mea-pill mea-pill--tbd">DIV</span>. Quando padronizar traria ganho claro, uma caixa âmbar indica a possibilidade de repadronização, reunida na seção 9.</p>
-    <div class="mea-seg" id="index" style="margin-top:12px" aria-label="Índice"></div>
   </div>
 </section>
 
@@ -428,22 +439,40 @@ Fonte: autoria própria. | adaptado de Borges et al. (2013a).</code></div></div>
 
 <!-- 9 -->
 <section class="mea-section" id="melhorias">
-  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">9 · Decisão dos editores</h2></div><p class="mea-section-head__note">Para cada proposta de repadronização, escolha a decisão e registre a definição. Os campos ficam salvos neste navegador. Ao terminar, use “Copiar decisões” e envie o texto por e-mail ou mensagem.</p></div>
-  <div class="mea-panel">
-    <h3 class="mea-panel__title">Identificação</h3>
-    <div class="mea-metaform">
-      <div class="mea-field"><label for="m_nome">Editor ou editora</label><input type="text" id="m_nome"></div>
-      <div class="mea-field"><label for="m_data">Data da decisão</label><input type="text" id="m_data" placeholder="dd/mm/aaaa"></div>
+  <div class="mea-section-head"><div class="mea-section-head__track"><h2 class="mea-section-head__title">9 · Decisão dos editores</h2></div><p class="mea-section-head__note">São 19 propostas. Decida uma a uma e envie tudo de uma vez, no fim da lista.</p></div>
+  <ol class="mea-steplist" style="margin-bottom:16px">
+    <li><div><b>Decida cada proposta</b><span>Escolha Aprovar, Aprovar com ajuste, Não adotar ou Adiar e, se quiser, escreva a definição. Tudo fica salvo neste navegador, então você pode parar e voltar depois.</span></div></li>
+    <li><div><b>Acompanhe pela barra fixa</b><span>Uma barra na parte de baixo da tela mostra quantas propostas já têm decisão e leva à próxima pendente.</span></div></li>
+    <li><div><b>Envie no fim da página</b><span>Depois da última proposta, informe seu nome e clique em <b>Enviar decisões</b>. Sem esse clique, nada chega à equipe da revista.</span></div></li>
+  </ol>
+  <div class="mea-prog"><div class="mea-prog__bar"><div id="pfill"></div></div><span id="ptxt" class="mea-note" style="margin:0"></span></div>
+  <div class="mea-items" id="mel"></div>
+
+  <div class="mea-panel mea-send" id="enviar" style="margin-top:24px">
+    <p class="mea-panel__label">Último passo</p>
+    <h3 class="mea-panel__title">Concluir e enviar</h3>
+    <p class="mea-lead">Revise o resumo, informe seu nome e envie. As decisões só chegam à equipe depois do clique em “Enviar decisões”.</p>
+    <div class="mea-sumline" id="sumline"></div>
+    <div class="mea-sendstate warn" id="pendwarn"></div>
+    <div class="mea-metaform" style="margin-top:14px">
+      <div class="mea-field"><label for="m_nome">Seu nome <span class="mea-req">(obrigatório)</span></label><input type="text" id="m_nome" autocomplete="name"></div>
+      <div class="mea-field"><label for="m_data">Data</label><input type="text" id="m_data" placeholder="dd/mm/aaaa"></div>
     </div>
-    <div class="mea-prog"><div class="mea-prog__bar"><div id="pfill"></div></div><span id="ptxt" class="mea-note" style="margin:0"></span></div>
     <div class="mea-actions">
-      <button class="mea-btn mea-btn--primary" type="button" id="copypauta">Copiar decisões</button>
-      <button class="mea-btn mea-btn--secondary" type="button" id="clrpauta">Limpar decisões</button>
+      <button class="mea-btn mea-btn--primary" type="button" id="sendpauta">Enviar decisões</button>
+      <button class="mea-btn mea-btn--secondary" type="button" id="copypauta">Copiar decisões</button>
+      <button class="mea-btn mea-btn--ghost" type="button" id="clrpauta">Limpar decisões</button>
       <span class="mea-note" style="margin:0" id="pautamsg" aria-live="polite"></span>
     </div>
+    <div class="mea-sendstate" id="sendstate" aria-live="polite"></div>
   </div>
-  <div class="mea-items" id="mel"></div>
 </section>
+
+<div class="mea-sticky hidden" id="stickybar" role="region" aria-label="Progresso das decisões">
+  <span class="mea-sticky__t" id="sbtxt"></span>
+  <button class="mea-btn mea-btn--secondary" type="button" id="sbnext">Próxima pendente</button>
+  <button class="mea-btn mea-btn--primary" type="button" id="sbgo">Concluir e enviar</button>
+</div>
 
 <!-- 10 -->
 <section class="mea-section" id="lacunas">
@@ -459,7 +488,7 @@ Fonte: autoria própria. | adaptado de Borges et al. (2013a).</code></div></div>
 
 <footer class="mea-footer">
   <div class="mea-wrap">
-    <p><b>Modelo de formatação RevBEA</b> · v0.3 · 13/11/2026</p>
+    <p><b>Modelo de formatação RevBEA</b> · v0.7 · 13/11/2026</p>
     <p>Fontes: template oficial (.doc, medido), diretrizes do site da revista e comparação com o layout final de <i>Ambiente &amp; Sociedade</i> (SciELO, 2026). Vale para artigos e relatos de experiência. Os exemplos são fictícios.</p>
   </div>
 </footer>
@@ -477,10 +506,9 @@ function copyText(t,msgEl){
 
 /* índice e navegação */
 var SECS=[['pagina','Página e rodapé'],['tipografia','Tipografia'],['ordem','Elementos'],['citacoes','Citações'],['figuras','Figuras e tabelas'],['referencias','Referências'],['numeracao','Escopo e numeração'],['autoria','Autoria, ORCID e Lattes'],['melhorias','Decisão dos editores'],['lacunas','Pontos em aberto']];
-var idx=$('#index'), jump=$('#jump');
+var jump=$('#jump');
 jump.insertAdjacentHTML('beforeend','<option value="">Escolha uma seção</option>');
 SECS.forEach(function(s,i){
-  idx.insertAdjacentHTML('beforeend','<a class="mea-seg__opt" href="#'+s[0]+'"><span class="mea-seg__n">'+(i+1)+'</span>'+s[1]+'</a>');
   jump.insertAdjacentHTML('beforeend','<option value="'+s[0]+'">'+(i+1)+' · '+s[1]+'</option>');
 });
 jump.addEventListener('change',function(){var el=document.getElementById(jump.value);if(el){el.scrollIntoView()}});
@@ -617,7 +645,10 @@ $('#copynote').addEventListener('click',function(){copyText($('#outnote').textCo
 render();
 
 /* melhorias */
+/* Aplicativo da Planilha Google que recebe as decisões dos editores. */
+var ENDPOINT='https://script.google.com/macros/s/AKfycbz44UCwg3HcLP9SGoTkwFQjN482_x3fpgzD76iFRb99Bs0R7Wm3-91xAUJ821vAjvcz/exec';
 var STATUS=['Aprovar','Aprovar com ajuste','Não adotar','Adiar'];
+var PILL={'':['mea-pill--plain','Pendente'],'Aprovar':['mea-pill--ok','Aprovar'],'Aprovar com ajuste':['mea-pill--adj','Aprovar com ajuste'],'Não adotar':['mea-pill--no','Não adotar'],'Adiar':['mea-pill--tbd','Adiar']};
 var MEL=[
  {n:1,t:'ORCID como campo padrão',now:'O template não prevê ORCID; só há Lattes.',prop:'Campo padrão no bloco de autoria (obrigatório ou recomendado), com validação do dígito verificador e URL https://orcid.org/…',why:'Desambiguação de autoria, indexação e integração com Crossref e SciELO.'},
  {n:2,t:'Lattes em formato único',now:'Rótulo, pontuação e protocolo variam conforme o preenchimento.',prop:'https://lattes.cnpq.br/<16 dígitos>, rótulo fixo “Lattes:”, hiperlink ativo.',why:'Link seguro e aparência consistente.'},
@@ -641,15 +672,48 @@ var MEL=[
 ];
 MEL.sort(function(a,b){return a.n-b.n});
 function oid(n){return 'OP-'+(n<10?'0':'')+n}
-var KEY='revbea-decisoes-v1', D={meta:{nome:'',data:''},d:{}};
-try{var raw=store(KEY); if(raw){var p=JSON.parse(raw); if(p&&p.d){D=p; D.meta=D.meta||{nome:'',data:''}}}}catch(e){}
+var KEY='revbea-decisoes-v1', D={meta:{nome:'',data:''},d:{},sent:null};
+try{var raw=store(KEY); if(raw){var p=JSON.parse(raw); if(p&&p.d){D=p; D.meta=D.meta||{nome:'',data:''}; D.sent=D.sent||null}}}catch(e){}
 function save(){store(KEY,JSON.stringify(D))}
 function getD(n){return D.d[n]||(D.d[n]={s:'',t:''})}
 function decidedCount(){return MEL.filter(function(m){return getD(m.n).s}).length}
+function today(){var t=new Date();return ('0'+t.getDate()).slice(-2)+'/'+('0'+(t.getMonth()+1)).slice(-2)+'/'+t.getFullYear()}
+function sig(){return JSON.stringify([D.meta.nome,D.meta.data,MEL.map(function(m){var d=getD(m.n);return [d.s,d.t]})])}
+function fmt(iso){try{return new Date(iso).toLocaleString('pt-BR')}catch(e){return iso}}
+function showState(kind,txt){var el=$('#sendstate');el.className='mea-sendstate show '+kind;el.textContent=txt}
 function prog(){
-  var n=decidedCount();
+  var n=decidedCount(), pend=MEL.length-n;
   $('#pfill').style.width=(n/MEL.length*100)+'%';
   $('#ptxt').textContent=n+' de '+MEL.length+' propostas decididas';
+  $('#sbtxt').textContent=n+' de '+MEL.length+' decididas'+(pend?' · faltam '+pend:' · todas decididas');
+}
+function updEnd(){
+  var c={}; STATUS.forEach(function(x){c[x]=0}); var pend=0;
+  MEL.forEach(function(m){var s=getD(m.n).s; if(s)c[s]++; else pend++});
+  $('#sumline').innerHTML=STATUS.map(function(x){return '<span class="mea-pill '+PILL[x][0]+'">'+c[x]+' · '+x+'</span>'}).join('')+'<span class="mea-pill mea-pill--plain">'+pend+' · Pendente</span>';
+  var w=$('#pendwarn');
+  if(pend){w.className='mea-sendstate show warn';w.textContent='Faltam '+pend+' propostas sem decisão. Você pode enviar agora e enviar de novo depois de completar.'}
+  else{w.className='mea-sendstate';w.textContent=''}
+  if(D.sent){
+    if(D.sent.sig===sig())showState('ok','Enviado em '+fmt(D.sent.at)+'. Nada mudou desde então.');
+    else showState('info','Último envio em '+fmt(D.sent.at)+'. Há alterações desde então: clique em Enviar decisões para enviar de novo.');
+  }
+}
+function setPill(art,st){var p=art.querySelector('.st-pill'),v=PILL[st||''];p.className='mea-pill st-pill '+v[0];p.textContent=v[1]}
+function renderMel(){
+  var h='';
+  MEL.forEach(function(m){
+    var d=getD(m.n);
+    h+='<article class="mea-panel mea-item searchable" id="op'+m.n+'" data-s="'+esc(d.s)+'"><div class="mea-item__head"><span class="mea-item__id">'+oid(m.n)+' de '+MEL.length+'</span><span class="mea-pill st-pill"></span></div><h3>'+esc(m.t)+'</h3><dl><dt>Hoje</dt><dd>'+esc(m.now)+'</dd><dt>Proposta</dt><dd>'+esc(m.prop)+'</dd><dt>Por quê</dt><dd>'+esc(m.why)+'</dd></dl>'
+     +'<div class="mea-decide"><p class="mea-decide__lbl">Sua decisão</p><div class="mea-seg" role="group" aria-label="Decisão para '+oid(m.n)+'">'
+     +STATUS.map(function(x){return '<button class="mea-seg__opt" type="button" data-n="'+m.n+'" data-st="'+esc(x)+'" aria-pressed="'+(d.s===x)+'">'+esc(x)+'</button>'}).join('')
+     +'</div><div class="mea-field"><label for="t'+m.n+'">Definição ou observação (escolha adotada, ajuste, prazo)</label><textarea id="t'+m.n+'" data-n="'+m.n+'">'+esc(d.t)+'</textarea></div></div></article>';
+  });
+  $('#mel').innerHTML=h;
+  MEL.forEach(function(m){setPill(document.getElementById('op'+m.n),getD(m.n).s)});
+  if(!D.meta.data){D.meta.data=today()}
+  $('#m_nome').value=D.meta.nome||''; $('#m_data').value=D.meta.data||'';
+  prog(); updEnd(); badges(); applySearch(); sbUpdate();
 }
 function badges(){
   $$('.mea-opp').forEach(function(el){
@@ -660,45 +724,61 @@ function badges(){
     a.textContent=st?('Decisão: '+st):'Decidir na seção 9';
   });
 }
-function renderMel(){
-  var h='';
-  MEL.forEach(function(m){
-    var d=getD(m.n);
-    h+='<article class="mea-panel mea-item searchable" id="op'+m.n+'" data-s="'+esc(d.s)+'"><div class="mea-item__head"><span class="mea-item__id">'+oid(m.n)+'</span></div><h3>'+esc(m.t)+'</h3><dl><dt>Hoje</dt><dd>'+esc(m.now)+'</dd><dt>Proposta</dt><dd>'+esc(m.prop)+'</dd><dt>Por quê</dt><dd>'+esc(m.why)+'</dd></dl>'
-     +'<div class="mea-decide"><p class="mea-decide__lbl">Decisão</p><div class="mea-seg" role="group" aria-label="Decisão para '+oid(m.n)+'">'
-     +STATUS.map(function(x){return '<button class="mea-seg__opt" type="button" data-n="'+m.n+'" data-st="'+esc(x)+'" aria-pressed="'+(d.s===x)+'">'+esc(x)+'</button>'}).join('')
-     +'</div><div class="mea-field"><label for="t'+m.n+'">Definição ou observação (escolha adotada, ajuste, prazo)</label><textarea id="t'+m.n+'" data-n="'+m.n+'">'+esc(d.t)+'</textarea></div></div></article>';
-  });
-  $('#mel').innerHTML=h;
-  $('#m_nome').value=D.meta.nome||''; $('#m_data').value=D.meta.data||'';
-  prog(); badges(); applySearch();
-}
 $('#mel').addEventListener('click',function(e){
   var b=e.target.closest('[data-st]'); if(!b)return;
   var n=b.getAttribute('data-n'), d=getD(n), st=b.getAttribute('data-st');
   d.s=(d.s===st)?'':st; save();
-  var art=document.getElementById('op'+n); art.setAttribute('data-s',d.s);
+  var art=document.getElementById('op'+n); art.setAttribute('data-s',d.s); setPill(art,d.s);
   $$('[data-st]',art).forEach(function(x){x.setAttribute('aria-pressed',x.getAttribute('data-st')===d.s?'true':'false')});
-  prog(); badges();
+  prog(); updEnd(); badges();
 });
 $('#mel').addEventListener('input',function(e){
   var n=e.target.getAttribute('data-n'); if(!n||e.target.tagName!=='TEXTAREA')return;
-  getD(n).t=e.target.value; save();
+  getD(n).t=e.target.value; save(); updEnd();
 });
-$('#m_nome').addEventListener('input',function(e){D.meta.nome=e.target.value;save()});
-$('#m_data').addEventListener('input',function(e){D.meta.data=e.target.value;save()});
+$('#m_nome').addEventListener('input',function(e){D.meta.nome=e.target.value;save();updEnd()});
+$('#m_data').addEventListener('input',function(e){D.meta.data=e.target.value;save();updEnd()});
 function resumo(){
   var l=['RevBEA – decisões sobre as propostas de repadronização','Editor(a): '+(D.meta.nome||'não informado')+' · Data: '+(D.meta.data||'não informada'),'Decididas: '+decidedCount()+' de '+MEL.length,''];
   MEL.forEach(function(m){var d=getD(m.n);l.push(oid(m.n)+' · '+m.t+'\n  Decisão: '+(d.s||'pendente')+(d.t?'\n  Definição: '+d.t:''))});
   return l.join('\n');
 }
 $('#copypauta').addEventListener('click',function(){copyText(resumo(),$('#pautamsg'))});
+var ENDPOINT='https://script.google.com/macros/s/AKfycbz44UCwg3HcLP9SGoTkwFQjN482_x3fpgzD76iFRb99Bs0R7Wm3-91xAUJ821vAjvcz/exec';
+$('#sendpauta').addEventListener('click',function(){
+  var btn=$('#sendpauta');
+  if(!(D.meta.nome||'').trim()){showState('err','Informe o seu nome antes de enviar.');$('#m_nome').focus();return}
+  if(!decidedCount()){showState('err','Registre ao menos uma decisão antes de enviar.');return}
+  if(!ENDPOINT){showState('err','O envio ainda não está configurado. Use Copiar decisões.');return}
+  var body=JSON.stringify({versao:'v0.6',enviadoEm:new Date().toISOString(),editor:D.meta.nome,data:D.meta.data||'',
+    decisoes:MEL.map(function(m){var d=getD(m.n);return {id:oid(m.n),titulo:m.t,decisao:d.s||'pendente',definicao:d.t||''}})});
+  var enviadoSig=sig(), enviadoAt=JSON.parse(body).enviadoEm;
+  btn.disabled=true; btn.textContent='Enviando…'; showState('info','Enviando as decisões…');
+  fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:body})
+    .then(function(){D.sent={at:enviadoAt,sig:enviadoSig};save();btn.disabled=false;btn.textContent='Enviar decisões';updEnd();showState('ok','Decisões enviadas em '+fmt(enviadoAt)+'. Obrigado! Se mudar de ideia, altere a decisão e envie de novo.')})
+    .catch(function(){btn.disabled=false;btn.textContent='Enviar decisões';showState('err','Não foi possível enviar. Verifique a conexão e tente de novo, ou use Copiar decisões.')});
+});
 var clrT=null;
 $('#clrpauta').addEventListener('click',function(){
   var btn=$('#clrpauta');
-  if(!clrT){btn.textContent='Confirmar limpeza';clrT=setTimeout(function(){btn.textContent='Limpar decisões';clrT=null},4000);return}
+  if(!clrT){btn.textContent='Clique de novo para confirmar';clrT=setTimeout(function(){btn.textContent='Limpar decisões';clrT=null},4000);return}
   clearTimeout(clrT);clrT=null;btn.textContent='Limpar decisões';
-  D={meta:{nome:'',data:''},d:{}}; save(); renderMel();
+  D={meta:{nome:'',data:''},d:{},sent:null}; save(); $('#sendstate').className='mea-sendstate'; renderMel();
+});
+/* barra fixa */
+function sbUpdate(){
+  var sec=$('#melhorias'), end=$('#enviar'), bar=$('#stickybar'); if(!sec||!end||!bar)return;
+  var r=sec.getBoundingClientRect(), e=end.getBoundingClientRect(), vh=window.innerHeight||800;
+  var inSec=r.top<vh*0.5 && r.bottom>0, endVisible=e.top<vh-120;
+  bar.classList.toggle('hidden',!(inSec&&!endVisible));
+}
+window.addEventListener('scroll',sbUpdate,{passive:true}); window.addEventListener('resize',sbUpdate);
+$('#sbgo').addEventListener('click',function(){$('#enviar').scrollIntoView({behavior:'smooth',block:'start'})});
+$('#sbnext').addEventListener('click',function(){
+  var pend=MEL.filter(function(m){return !getD(m.n).s});
+  if(!pend.length){$('#enviar').scrollIntoView({behavior:'smooth',block:'start'});return}
+  var next=pend.filter(function(m){return document.getElementById('op'+m.n).getBoundingClientRect().top>80})[0]||pend[0];
+  document.getElementById('op'+next.n).scrollIntoView({behavior:'smooth',block:'start'});
 });
 $('#tilemel').textContent=MEL.length;
 
